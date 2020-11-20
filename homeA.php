@@ -1,4 +1,5 @@
 <?php
+
 ob_start();
 session_start();
 require_once 'actions/db_connect.php';
@@ -16,7 +17,7 @@ if (isset($_SESSION['user'])) {
 }
 
 $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
-var_dump($_SESSION);
+// var_dump($_SESSION);
 ?>
 
 <!DOCTYPE html>
@@ -58,7 +59,7 @@ var_dump($_SESSION);
         </form>
         <form class="form-inline">
             <a class="navbar-brand" href="#">Welcome - <?php echo $userRow['userName']; ?></a>
-            <a href="../logout.php?logout"><button class="btn btn-outline-primary" type="button">Sign Out</button></a>
+            <a href="logout.php?logout"><button class="btn btn-outline-primary" type="button">Sign Out</button></a>
         </form>
     </nav>
 
@@ -74,6 +75,7 @@ var_dump($_SESSION);
                         <th scope="col">Size</th>
                         <th scope="col">Location</th>
                         <th scope="col">Short BIO</th>
+                        <th scope="col">Edit</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -92,15 +94,15 @@ var_dump($_SESSION);
                        <td>" . $row['address'] . ', ' . $row['zip'] . ',' . $row['city'] . "</td>
                        <td>" . $row['description'] . "</td>
                        <td>
-                       <a href='update.php?id=" . $row['animalID'] . "'><button class='btn btn-outline-primary' type='button'>Edit</button></a>
-                       <a href='delete.php?id=" . $row['animalID'] . "'><button class='btn btn-outline-danger' type='button'>Delete</button></a>
+                       <a href='edit.php?id=" . $row['animalID'] . "'><button class='btn btn-outline-primary mb-1' type='button'>Edit</button></a>
+                       <a href='edit.php?id=" . $row['animalID'] . "'><button class='btn btn-outline-danger' type='button'>Delete</button></a>
                        </td>
                    </tr>";
                         }
                     } else {
                         echo  "<tr scope='row'>
-                    <td colspan='12'><center>No Data Avaliable</center></td>
-                </tr>";
+                                    <td colspan='12'><center>No Data Avaliable</center></td>
+                                </tr>";
                     }
                     ?>
                 </tbody>

@@ -78,7 +78,6 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
                 <select name="size" class="form-control">
                     <option>small</option>
                     <option>large</option>
-                    <!-- value="large" -->
                 </select>
             </div>
             <h3 class="mt-4">Location Infromation:</h3>
@@ -103,7 +102,7 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
             <!-- button to submit content -->
             <button class="btn btn-success" type="submit">Insert user</button>
             <!-- button to go back -->
-            <a href="index.php"><button class="btn btn-dark" type="button">Back</button></a>
+            <a href="homeA.php"><button class="btn btn-dark" type="button">Back</button></a>
 
 
         </form>
