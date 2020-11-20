@@ -16,7 +16,7 @@ if (isset($_SESSION['user'])) {
 }
 
 $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
-var_dump($_SESSION);
+// var_dump($_SESSION);
 ?>
 
 <!DOCTYPE html>
@@ -32,15 +32,11 @@ var_dump($_SESSION);
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PHP CRUD Restaurant</title>
+    <title>Pet Adoption</title>
 
     <style type="text/css">
         body {
-            background-color: #bbe8b5;
-        }
-
-        img {
-            height: 10em;
+            background-color: white;
         }
     </style>
 
@@ -51,9 +47,11 @@ var_dump($_SESSION);
     <nav class="navbar sticky-top fixed navbar-light bg-light">
         <form class="form-inline">
             <a class="navbar-brand" href="home.php">Home</a>
+            <a class="navbar-brand" href="general.php">Young Pets</a>
+            <a class="navbar-brand" href="senior.php">Senior Pets</a>
             <!-- go to admin button only vis for administrators -->
             <?php if (isset($_SESSION["admin"])) {
-                echo "<a href='home.php'><button class='btn btn-warning' type='button'>Go to Admin page</button></a>";
+                echo "<a href='homeA.php'><button class='btn btn-warning' type='button'>Go to Admin page</button></a>";
             }
             ?>
             <!-- end of admin button -->
@@ -64,47 +62,31 @@ var_dump($_SESSION);
         </form>
     </nav>
 
-    <main>
-        <div class="container-fluid mt-4">
-            <table class="table">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Image</th>
-                        <th scope="col">Gender</th>
-                        <th scope="col">Age</th>
-                        <th scope="col">Size</th>
-                        <th scope="col">Location</th>
-                        <th scope="col">Short BIO</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    $sql = "SELECT * FROM animals";
-                    $result = $connect->query($sql);
+    <main class="container-fluid mt-4 ">
+        <div class="d-flex justify-content-center row">
+            <?php
+            $sql = "SELECT * FROM animals";
+            $result = $connect->query($sql);
 
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            echo  "<tr scope='row'>
-                       <td>" . $row['animalName'] . "</td>
-                       <td><img src=" . $row['img'] . "></td>
-                       <td>" . $row['gender'] . "</td>
-                       <td>" . $row['age'] . "</td>
-                       <td>" . $row['size'] . "</td>
-                       <td>" . $row['address'] . ', ' . $row['zip'] . ',' . $row['city'] . "</td>
-                       <td>" . $row['description'] . "</td>
-                       <td>
-                       </td>
-                   </tr>";
-                        }
-                    } else {
-                        echo  "<tr scope='row'>
-                    <td colspan='12'><center>No Data Avaliable</center></td>
-                </tr>";
-                    }
-                    ?>
-                </tbody>
-            </table>
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    echo  "
+                            <div class='card col-sm-12 col-md-5 col-lg-3 m-4' style='width: 18rem;'>
+                                <img src='" . $row['img'] . "' class='card-img-top' alt='" . $row['animalName'] . "'>
+                                <div class='card-body'>
+                                    <h5 class='card-title'>" . $row['animalName'] . "</h5>
+                                    <p class='card-text'>" . $row['age'] . " years old, " . $row['gender'] . ", size: " . $row['size'] . "</p>
+                                    <p class='card-text'>" . $row['description'] . "</p>
+                                    <p class='card-text'>" . $row['address'] . ', ' . $row['zip'] . ',' . $row['city'] . "</p>
+                                </div>
+                            </div>
+                        ";
+                }
+            } else {
+                echo  "<h2> No data available.";
+            }
+            ?>
+
         </div>
     </main>
 

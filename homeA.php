@@ -33,7 +33,7 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PHP CRUD Restaurant</title>
+    <title>Admin home</title>
 
     <style type="text/css">
         body {
@@ -42,7 +42,7 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
 
         img {
             height: 10em;
-            width: 12em;
+            max-width: 12em;
         }
     </style>
 
@@ -52,11 +52,13 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
 
     <nav class="navbar sticky-top fixed navbar-light bg-light">
         <form class="form-inline">
-            <a class="navbar-brand" href="home.php">Home</a>
+            <a class="navbar-brand" href="homeA.php">Home</a>
             <a href="create.php"><button class="btn btn-warning" type="button">Add Pet</button></a>
             <!-- jump to the user site -->
-            <a href="homeA.php"><button class="btn btn-primary  ml-2" type="button">User Preview Site</button></a>
-            <!--  -->
+            <a href="home.php"><button class="btn btn-danger  ml-2" type="button">User Preview Site</button></a>
+            <!-- other sites -->
+            <a href="generalA.php"><button class="btn btn-primary  ml-2" type="button">Young Pets</button></a>
+            <a href="seniorA.php"><button class="btn btn-primary  ml-2" type="button">Senior Pets</button></a>
         </form>
         <form class="form-inline">
             <a class="navbar-brand" href="#">Welcome - <?php echo $userRow['userName']; ?></a>

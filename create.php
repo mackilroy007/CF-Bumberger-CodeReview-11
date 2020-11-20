@@ -100,7 +100,7 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
             </div>
             <hr>
             <!-- button to submit content -->
-            <button class="btn btn-success" type="submit">Insert user</button>
+            <button class="btn btn-success" type="submit">Add Entry</button>
             <!-- button to go back -->
             <a href="homeA.php"><button class="btn btn-dark" type="button">Back</button></a>
 
