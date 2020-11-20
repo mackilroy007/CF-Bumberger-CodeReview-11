@@ -3,7 +3,7 @@ ob_start();
 session_start();
 require_once 'actions/db_connect.php';
 
-it will never let you open index(login) page if session is set
+// if loop will never let you open index(login) page if session is not set
 if (isset($_SESSION['admin']) != "") {
     header("Location: homeA.php"); //redirects to admin site
     exit;
@@ -51,11 +51,11 @@ if (isset($_POST['btn-login'])) {
 
         if ($count == 1 && $row['userPass'] == $password) {
 
-            if ($row["state"] == "user") {
+            if ($row["userType"] == "user") {
 
                 $_SESSION["user"] = $row["userId"];
                 header("Location: home.php");
-            } else if ($row["state"] == "admin") {
+            } else if ($row["userType"] == "admin") {
 
                 $_SESSION["admin"] = $row["userId"];
                 header("Location: homeA.php");

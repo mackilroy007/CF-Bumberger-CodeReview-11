@@ -3,14 +3,20 @@ ob_start();
 session_start();
 require_once 'actions/db_connect.php';
 
-// if session is not admin it get redirected to the user page
-if (!isset($_SESSION["admin"])) {
-    header("Location: homeU.php");
+// if session is not set this will redirect to login page
+if (!isset($_SESSION['admin']) && !isset($_SESSION['user'])) {
+    header("Location: index.php");
+    exit;
 }
-// select logged-in users details
-$res = mysqli_query($connect, "SELECT * FROM users WHERE userId=" . $_SESSION['admin']);
-$userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
+// select logged-in users details (user or admin)
+if(isset($_SESSION['user'])){
+    $res = mysqli_query($connect, "SELECT * FROM users WHERE userId=" . $_SESSION['user']);
+} else{
+   $res = mysqli_query($connect, "SELECT * FROM users WHERE userId=" . $_SESSION['admin']);
+}
 
+$userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
+// var_dump($_SESSION);
 ?>
 
 <!DOCTYPE html>
@@ -29,7 +35,6 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
     <title>PHP CRUD Restaurant</title>
 
     <style type="text/css">
-
         body {
             background-color: #bbe8b5;
         }
@@ -46,8 +51,12 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
     <nav class="navbar sticky-top fixed navbar-light bg-light">
         <form class="form-inline">
             <a class="navbar-brand" href="home.php">Home</a>
-            <a href="create.php"><button class="btn btn-warning" type="button">Add Meal</button></a>
-            <a href="homeU.php"><button class="btn btn-primary  ml-2" type="button">User Preview Site</button></a>
+            <!-- go to admin button only vis for administrators -->
+            <?php if(isset($_SESSION["admin"])){
+                echo"<a href='home.php'><button class='btn btn-warning' type='button'>Go to Admin page</button></a>";
+            }
+                ?>
+            <!-- end of admin button -->
         </form>
         <form class="form-inline">
             <a class="navbar-brand" href="#">Welcome - <?php echo $userRow['userName']; ?></a>
@@ -56,13 +65,9 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
     </nav>
 
     <main>
-        <!-- welcome message section -->
-        <!-- <p>Hi <?php # echo $userRow['userEmail' ]; 
-                    ?></p> -->
-        <!-- end of welcome message section -->
         <?php
 
-        $sql = "SELECT * FROM animal";
+        $sql = "SELECT * FROM meal";
         $result = $connect->query($sql);
         $result = mysqli_query($connect, $sql);
 
@@ -77,8 +82,6 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
                                         <p class='card-text'>Price: " . $row['price'] . "$</p>
                                         <p class='card-text'>Ingredients: " . $row['ingredients'] . "</p>
                                         <p class='card-text'>Allergies: " . $row['allergies'] . "</p>
-                                        <a href='update.php?id=" . $row['id'] . "'><button class='btn btn-outline-primary' type='button'>Edit</button></a>
-                                        <a href='delete.php?id=" . $row['id'] . "'><button class='btn btn-outline-danger' type='button'>Delete</button></a>
                                     </div>
                                 </div>
                             </article>";
@@ -90,7 +93,6 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
 
         ?>
     </main>
- 
 
     <!-- Optional JavaScript -->
 
