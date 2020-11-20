@@ -5,10 +5,9 @@ session_start();
 
 require_once 'actions/db_connect.php';
 
-
-
 // if session is not admin it get redirected to the user page
-if (!isset($_SESSION["admin"])) {
+if (isset($_SESSION["admin"]) || isset($_SESSION["superadmin"])) {
+} else {
     header("Location: home.php");
 }
 
@@ -53,12 +52,12 @@ if ($_GET['id']) {
             <hr>
             <div class="form-group">
                 <label for="animalName">Animal Name:</label>
-                <input type="text" name="animalName" class="form-control" placeholder="Insert the animal name here" value="<?php echo $data['animalName'] ?>"/>
+                <input type="text" name="animalName" class="form-control" placeholder="Insert the animal name here" value="<?php echo $data['animalName'] ?>" />
             </div>
 
             <div class="form-group">
                 <label for="img">Image URL format:</label>
-                <input type="text" name="img" class="form-control" placeholder="Insert the image URL here" value="<?php echo $data['img'] ?>"/>
+                <input type="text" name="img" class="form-control" placeholder="Insert the image URL here" value="<?php echo $data['img'] ?>" />
             </div>
             <div class="form-group">
                 <label for="gender">Gender:</label>
@@ -69,7 +68,7 @@ if ($_GET['id']) {
             </div>
             <div class="form-group">
                 <label for="age">Age in Years:</label>
-                <input type="numbers" name="age" class="form-control" placeholder="Insert the age in years" value="<?php echo $data['age'] ?>"/>
+                <input type="numbers" name="age" class="form-control" placeholder="Insert the age in years" value="<?php echo $data['age'] ?>" />
             </div>
             <div class="form-group">
                 <label for="size">Animal Size:</label>
@@ -82,19 +81,19 @@ if ($_GET['id']) {
             <hr>
             <div class="form-group">
                 <label for="address">Street Name and House Number:</label>
-                <input type="text" name="address" class="form-control" placeholder="Insert the street name and house number" value="<?php echo $data['address'] ?>"/>
+                <input type="text" name="address" class="form-control" placeholder="Insert the street name and house number" value="<?php echo $data['address'] ?>" />
             </div>
             <div class="form-group">
                 <label for="zip">ZIP Code:</label>
-                <input type="text" name="zip" class="form-control" placeholder="Enter ZIP code of the anmilas location" value="<?php echo $data['zip'] ?>"/>
+                <input type="text" name="zip" class="form-control" placeholder="Enter ZIP code of the anmilas location" value="<?php echo $data['zip'] ?>" />
             </div>
             <div class="form-group">
                 <label for="city">City:</label>
-                <input type="text" name="city" class="form-control" placeholder="Enter the City/Village location of the animal" value="<?php echo $data['city'] ?>"/>
+                <input type="text" name="city" class="form-control" placeholder="Enter the City/Village location of the animal" value="<?php echo $data['city'] ?>" />
             </div>
             <div class="form-group">
                 <label for="description">A short description:</label>
-                <input type="text" name="description" class="form-control" placeholder="Add a short description (max 500 char)" value="<?php echo $data['description'] ?>"/>
+                <input type="text" name="description" class="form-control" placeholder="Add a short description (max 500 char)" value="<?php echo $data['description'] ?>" />
             </div>
             <hr>
 

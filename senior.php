@@ -5,15 +5,18 @@ session_start();
 require_once 'actions/db_connect.php';
 
 // if session is not admin it get redirected to the user page
-if (!isset($_SESSION["admin"])) {
+if (isset($_SESSION["admin"]) || isset($_SESSION["superadmin"])) {
+} else {
     header("Location: home.php");
 }
 
 // select logged-in users details (user or admin)
 if (isset($_SESSION['user'])) {
     $res = mysqli_query($connect, "SELECT * FROM users WHERE userId=" . $_SESSION['user']);
-} else {
+} else if (isset($_SESSION['admin'])) {
     $res = mysqli_query($connect, "SELECT * FROM users WHERE userId=" . $_SESSION['admin']);
+} else {
+    $res = mysqli_query($connect, "SELECT * FROM users WHERE userId=" . $_SESSION['superadmin']);
 }
 
 $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
@@ -51,7 +54,7 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
             <a class="navbar-brand" href="general.php">Young Pets</a>
             <a class="navbar-brand" href="senior.php">Senior Pets</a>
             <!-- go to admin button only vis for administrators -->
-            <?php if (isset($_SESSION["admin"])) {
+            <?php if (isset($_SESSION["admin"]) || isset($_SESSION['superadmin'])) {
                 echo "<a href='seniorA.php'><button class='btn btn-warning ml-2' type='button'>Go to Admin page</button></a>";
             }
             ?>
@@ -65,13 +68,13 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
 
     <main class="container-fluid">
         <div class="d-flex justify-content-center row">
-                    <?php
-                    $sql = "SELECT * FROM animals WHERE age > 8";
-                    $result = $connect->query($sql);
+            <?php
+            $sql = "SELECT * FROM animals WHERE age > 8";
+            $result = $connect->query($sql);
 
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            echo  "<div class='card col-sm-12 col-md-5 col-lg-3 m-4' style='width: 18rem;'>
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    echo  "<div class='card col-sm-12 col-md-5 col-lg-3 m-4' style='width: 18rem;'>
                             <img src='" . $row['img'] . "' class='card-img-top' alt='" . $row['animalName'] . "'>
                             <div class='card-body'>
                                 <h5 class='card-title'>" . $row['animalName'] . "</h5>
@@ -80,13 +83,13 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
                                 <p class='card-text'>" . $row['address'] . ', ' . $row['zip'] . ',' . $row['city'] . "</p>
                             </div>
                         </div>";
-                        }
-                    } else {
-                        echo  "<tr scope='row'>
+                }
+            } else {
+                echo  "<tr scope='row'>
                                     <td colspan='12'><center>No Data Avaliable</center></td>
                                 </tr>";
-                    }
-                    ?>
+            }
+            ?>
         </div>
     </main>
 

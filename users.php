@@ -5,9 +5,8 @@ session_start();
 require_once 'actions/db_connect.php';
 
 // if session is not admin it get redirected to the user page
-if (isset($_SESSION["admin"]) || isset($_SESSION["superadmin"])) {
-} else {
-    header("Location: home.php");
+if (!isset($_SESSION["superadmin"])) {
+    header("Location: homeA.php");
 }
 
 // select logged-in users details (user or admin)
@@ -36,7 +35,7 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Young Animals</title>
+    <title>Admin home</title>
 
     <style type="text/css">
         body {
@@ -45,7 +44,7 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
 
         img {
             height: 10em;
-            width: 12em;
+            max-width: 12em;
         }
     </style>
 
@@ -58,15 +57,12 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
             <a class="navbar-brand" href="homeA.php">Home</a>
             <a href="create.php"><button class="btn btn-warning" type="button">Add Pet</button></a>
             <!-- jump to the user site -->
-            <a href="general.php"><button class="btn btn-danger  ml-2" type="button">User Preview Site</button></a>
+            <a href="home.php"><button class="btn btn-danger  ml-2" type="button">User Preview Site</button></a>
             <!-- other sites -->
             <a href="generalA.php"><button class="btn btn-primary  ml-2" type="button">Young Pets</button></a>
             <a href="seniorA.php"><button class="btn btn-primary  ml-2" type="button">Senior Pets</button></a>
             <!-- go to super admin button only vis for administrators -->
-            <?php if (isset($_SESSION["superadmin"])) {
-                echo "<a href='users.php'><button class='btn btn-success ml-2' type='button'>Users</button></a>";
-            }
-            ?>
+            <a href="users.php"><button class="btn btn-success ml-2" type="button">Users</button></a>
             <!-- end of super admin button -->
         </form>
         <form class="form-inline">
@@ -81,30 +77,22 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
                 <thead class="thead-dark text-center">
                     <tr>
                         <th scope="col">Name</th>
-                        <th scope="col">Image</th>
-                        <th scope="col">Gender</th>
-                        <th scope="col">Age (years)</th>
-                        <th scope="col">Size</th>
-                        <th scope="col">Location</th>
-                        <th scope="col">Short BIO</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Access Type</th>
                         <th scope="col">Edit</th>
                     </tr>
                 </thead>
                 <tbody class="text-center">
                     <?php
-                    $sql = "SELECT * FROM animals WHERE age < 8";
+                    $sql = "SELECT * FROM users";
                     $result = $connect->query($sql);
 
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
                             echo  "<tr scope='row'>
-                       <td>" . $row['animalName'] . "</td>
-                       <td><img src=" . $row['img'] . "></td>
-                       <td>" . $row['gender'] . "</td>
-                       <td>" . $row['age'] . "</td>
-                       <td>" . $row['size'] . "</td>
-                       <td>" . $row['address'] . ', ' . $row['zip'] . ',' . $row['city'] . "</td>
-                       <td>" . $row['description'] . "</td>
+                       <td>" . $row['userName'] . "</td>
+                       <td>" . $row['userEmail'] . "</td>
+                       <td>" . $row['userType'] . "</td>
                        <td>
                        <a href='edit.php?id=" . $row['animalID'] . "'><button class='btn btn-outline-primary mb-1' type='button'>Edit</button></a>
                        <a href='delete.php?id=" . $row['animalID'] . "'><button class='btn btn-outline-danger' type='button'>Delete</button></a>

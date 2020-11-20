@@ -59,14 +59,20 @@ if (isset($_POST['btn-login'])) {
 
                 $_SESSION["admin"] = $row["userId"];
                 header("Location: homeA.php");
+            } else if ($row["userType"] == "superadmin") {
+
+                $_SESSION["superadmin"] = $row["userId"];
+                header("Location: homeA.php");
             }
         } else {
             $errMSG = "<h4 class='text-center'>Incorrect Credentials, Try again</h4>";
         }
     }
 }
-echo $_SESSION['user'];
-echo $_SESSION['admin'];
+// echo $_SESSION['user'];
+// echo $_SESSION['admin'];
+// echo $_SESSION['superadmin'];
+// var_dump($_SESSION);
 ?>
 <!DOCTYPE html>
 <html>

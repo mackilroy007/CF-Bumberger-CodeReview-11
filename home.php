@@ -4,15 +4,17 @@ session_start();
 require_once 'actions/db_connect.php';
 
 // if session is not set this will redirect to login page
-if (!isset($_SESSION['admin']) && !isset($_SESSION['user'])) {
+if (!isset($_SESSION['admin']) && !isset($_SESSION['user']) && !isset($_SESSION['superadmin'])) {
     header("Location: index.php");
     exit;
 }
 // select logged-in users details (user or admin)
 if (isset($_SESSION['user'])) {
     $res = mysqli_query($connect, "SELECT * FROM users WHERE userId=" . $_SESSION['user']);
-} else {
+} else if (isset($_SESSION['admin'])) {
     $res = mysqli_query($connect, "SELECT * FROM users WHERE userId=" . $_SESSION['admin']);
+} else {
+    $res = mysqli_query($connect, "SELECT * FROM users WHERE userId=" . $_SESSION['superadmin']);
 }
 
 $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
@@ -50,7 +52,7 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
             <a class="navbar-brand" href="general.php">Young Pets</a>
             <a class="navbar-brand" href="senior.php">Senior Pets</a>
             <!-- go to admin button only vis for administrators -->
-            <?php if (isset($_SESSION["admin"])) {
+            <?php if (isset($_SESSION["admin"]) || isset($_SESSION['superadmin'])) {
                 echo "<a href='homeA.php'><button class='btn btn-warning' type='button'>Go to Admin page</button></a>";
             }
             ?>

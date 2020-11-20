@@ -5,15 +5,19 @@ session_start();
 require_once 'actions/db_connect.php';
 
 // if session is not admin it get redirected to the user page
-if (!isset($_SESSION["admin"])) {
+if (isset($_SESSION["admin"]) || isset($_SESSION["superadmin"]) ) {
+    
+} else{
     header("Location: home.php");
 }
 
 // select logged-in users details (user or admin)
 if (isset($_SESSION['user'])) {
     $res = mysqli_query($connect, "SELECT * FROM users WHERE userId=" . $_SESSION['user']);
-} else {
+} else if (isset($_SESSION['admin'])) {
     $res = mysqli_query($connect, "SELECT * FROM users WHERE userId=" . $_SESSION['admin']);
+} else {
+    $res = mysqli_query($connect, "SELECT * FROM users WHERE userId=" . $_SESSION['superadmin']);
 }
 
 $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
@@ -52,13 +56,19 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
 
     <nav class="navbar sticky-top fixed navbar-light bg-light">
         <form class="form-inline">
-            <a class="navbar-brand" href="home.php">Home</a>
+            <a class="navbar-brand" href="homeA.php">Home</a>
             <a href="create.php"><button class="btn btn-warning" type="button">Add Pet</button></a>
             <!-- jump to the user site -->
             <a href="senior.php"><button class="btn btn-danger  ml-2" type="button">User Preview Site</button></a>
             <!-- other sites -->
             <a href="generalA.php"><button class="btn btn-primary  ml-2" type="button">Young Pets</button></a>
             <a href="seniorA.php"><button class="btn btn-primary  ml-2" type="button">Senior Pets</button></a>
+            <!-- go to super admin button only vis for administrators -->
+            <?php if (isset($_SESSION["superadmin"])) {
+                echo "<a href='users.php'><button class='btn btn-success ml-2' type='button'>Users</button></a>";
+            }
+            ?>
+            <!-- end of super admin button -->
         </form>
         <form class="form-inline">
             <a class="navbar-brand" href="#">Welcome - <?php echo $userRow['userName']; ?></a>

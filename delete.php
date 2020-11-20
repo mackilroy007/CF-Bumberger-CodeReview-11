@@ -5,7 +5,8 @@ session_start();
 require_once 'actions/db_connect.php';
 
 // if session is not admin this will redirect to user page
-if (isset($_SESSION["user"])) {
+if (isset($_SESSION["admin"]) || isset($_SESSION["superadmin"])) {
+} else {
     header("Location: home.php");
     exit;
 }
