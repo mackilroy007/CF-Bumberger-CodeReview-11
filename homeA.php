@@ -37,11 +37,12 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
 
     <style type="text/css">
         body {
-            background-color: #bbe8b5;
+            background-color: white;
         }
 
         img {
             height: 10em;
+            width: 12em;
         }
     </style>
 
@@ -64,21 +65,21 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
     </nav>
 
     <main>
-        <div class="container-fluid mt-4">
+        <div class="container-fluid">
             <table class="table">
-                <thead class="thead-dark">
+                <thead class="thead-dark text-center">
                     <tr>
                         <th scope="col">Name</th>
                         <th scope="col">Image</th>
                         <th scope="col">Gender</th>
-                        <th scope="col">Age</th>
+                        <th scope="col">Age (years)</th>
                         <th scope="col">Size</th>
                         <th scope="col">Location</th>
                         <th scope="col">Short BIO</th>
                         <th scope="col">Edit</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="text-center">
                     <?php
                     $sql = "SELECT * FROM animals";
                     $result = $connect->query($sql);
@@ -95,7 +96,7 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
                        <td>" . $row['description'] . "</td>
                        <td>
                        <a href='edit.php?id=" . $row['animalID'] . "'><button class='btn btn-outline-primary mb-1' type='button'>Edit</button></a>
-                       <a href='edit.php?id=" . $row['animalID'] . "'><button class='btn btn-outline-danger' type='button'>Delete</button></a>
+                       <a href='delete.php?id=" . $row['animalID'] . "'><button class='btn btn-outline-danger' type='button'>Delete</button></a>
                        </td>
                    </tr>";
                         }
