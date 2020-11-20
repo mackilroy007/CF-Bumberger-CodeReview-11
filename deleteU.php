@@ -5,8 +5,7 @@ session_start();
 require_once 'actions/db_connect.php';
 
 // if session is not admin this will redirect to user page
-if (isset($_SESSION["admin"]) || isset($_SESSION["superadmin"])) {
-} else {
+if (!isset($_SESSION["superadmin"])) {
     header("Location: home.php");
     exit;
 }
@@ -14,7 +13,7 @@ if (isset($_SESSION["admin"]) || isset($_SESSION["superadmin"])) {
 if ($_GET['id']) {
     $id = $_GET['id'];
     // connect database with entry
-    $sql = "SELECT * FROM animals WHERE animalID = $id";
+    $sql = "SELECT * FROM users WHERE userID = $id";
     $result = mysqli_query($connect, $sql);
     $data = $result->fetch_assoc();
 }
@@ -22,7 +21,7 @@ if ($_GET['id']) {
 <?php
 
 // select logged-in users details
-$res = mysqli_query($connect, "SELECT * FROM users WHERE userId=" . $_SESSION['admin']);
+$res = mysqli_query($connect, "SELECT * FROM users WHERE userID=" . $_SESSION['superadmin']);
 $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
 ?>
 <!DOCTYPE html>
@@ -54,10 +53,10 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
     <div class="container text-center">
         <h2 class="m-4">Do you really want to delete this entry?</h2>
 
-        <form action="actions/a_delete.php" method="post">
-            <input type="hidden" name="animalID" value="<?php echo $data['animalID'] ?>" />
+        <form action="actions/a_deleteU.php" method="post">
+            <input type="hidden" name="userID" value="<?php echo $data['userID'] ?>" />
             <button class="btn btn-danger" type="submit">Yes, delete it!</button>
-            <a href="homeA.php"><button class="btn btn-dark" type="button">No, go back!</button></a>
+            <a href="users.php"><button class="btn btn-dark" type="button">No, go back!</button></a>
         </form>
     </div>
 

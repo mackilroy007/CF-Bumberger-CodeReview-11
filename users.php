@@ -94,8 +94,8 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
                        <td>" . $row['userEmail'] . "</td>
                        <td>" . $row['userType'] . "</td>
                        <td>
-                       <a href='edit.php?id=" . $row['animalID'] . "'><button class='btn btn-outline-primary mb-1' type='button'>Edit</button></a>
-                       <a href='delete.php?id=" . $row['animalID'] . "'><button class='btn btn-outline-danger' type='button'>Delete</button></a>
+                       <a href='editU.php?id=" . $row['userID'] . "'><button class='btn btn-outline-primary mb-1' type='button'>Edit</button></a>
+                       <a href='deleteU.php?id=" . $row['userID'] . "'><button class='btn btn-outline-danger' type='button'>Delete</button></a>
                        </td>
                    </tr>";
                         }
