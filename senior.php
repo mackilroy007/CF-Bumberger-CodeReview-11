@@ -4,10 +4,10 @@ ob_start();
 session_start();
 require_once 'actions/db_connect.php';
 
-// if session is not admin it get redirected to the user page
-if (isset($_SESSION["admin"]) || isset($_SESSION["superadmin"])) {
-} else {
-    header("Location: home.php");
+// if session is not set this will redirect to login page
+if (!isset($_SESSION['admin']) && !isset($_SESSION['user']) && !isset($_SESSION['superadmin'])) {
+    header("Location: index.php");
+    exit;
 }
 
 // select logged-in users details (user or admin)
@@ -66,7 +66,7 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
         </form>
     </nav>
 
-    <main class="container-fluid">
+    <main class="container-fluid mt-4">
         <div class="d-flex justify-content-center row">
             <?php
             $sql = "SELECT * FROM animals WHERE age > 8";

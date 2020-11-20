@@ -39,7 +39,7 @@ if ($_GET['id']) {
 <body>
     <nav class="navbar sticky-top fixed navbar-light bg-light">
         <form class="form-inline">
-            <a class="navbar-brand" href="index.php">Home</a>
+            <a class="navbar-brand" href="homeA.php">Home</a>
             <a href="create.php"><button class="btn btn-warning" type="button">Add Media Entry</button></a>
         </form>
     </nav>

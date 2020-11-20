@@ -12,6 +12,11 @@ if (isset($_SESSION['user']) != "") {
     header("Location: home.php"); // redirects to home.php user site
     exit;
 }
+if (isset($_SESSION['superadmin']) != "") {
+    header("Location: homeA.php"); // redirects to home.php admin site
+    exit;
+}
+
 
 $error = false;
 
@@ -52,16 +57,13 @@ if (isset($_POST['btn-login'])) {
         if ($count == 1 && $row['userPass'] == $password) {
 
             if ($row["userType"] == "user") {
-
-                $_SESSION["user"] = $row["userId"];
+                $_SESSION["user"] = $row["userID"];
                 header("Location: home.php");
             } else if ($row["userType"] == "admin") {
-
-                $_SESSION["admin"] = $row["userId"];
+                $_SESSION["admin"] = $row["userID"];
                 header("Location: homeA.php");
             } else if ($row["userType"] == "superadmin") {
-
-                $_SESSION["superadmin"] = $row["userId"];
+                $_SESSION["superadmin"] = $row["userID"];
                 header("Location: homeA.php");
             }
         } else {

@@ -21,8 +21,12 @@ if ($_GET['id']) {
 ?>
 <?php
 
-// select logged-in users details
-$res = mysqli_query($connect, "SELECT * FROM users WHERE userId=" . $_SESSION['admin']);
+// select logged-in users details (user or admin)
+ if (isset($_SESSION['admin'])){
+    $res = mysqli_query($connect, "SELECT * FROM users WHERE userId=" . $_SESSION['admin']);
+} else{
+    $res = mysqli_query($connect, "SELECT * FROM users WHERE userId=" . $_SESSION['superadmin']);
+}
 $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
 ?>
 <!DOCTYPE html>
@@ -44,7 +48,7 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
 <body>
 
     <nav class="navbar sticky-top fixed navbar-light bg-light">
-        <a class="navbar-brand" href="home.php">Home</a>
+        <a class="navbar-brand" href="homeA.php">Home</a>
         <form class="form-inline">
             <a class="navbar-brand" href="#">Welcome - <?php echo $userRow['userName']; ?></a>
             <a href="../logout.php?logout"><button class="btn btn-outline-primary" type="button">Sign Out</button></a>
