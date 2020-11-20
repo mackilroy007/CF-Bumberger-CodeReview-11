@@ -9,10 +9,10 @@ if (!isset($_SESSION['admin']) && !isset($_SESSION['user'])) {
     exit;
 }
 // select logged-in users details (user or admin)
-if(isset($_SESSION['user'])){
+if (isset($_SESSION['user'])) {
     $res = mysqli_query($connect, "SELECT * FROM users WHERE userId=" . $_SESSION['user']);
-} else{
-   $res = mysqli_query($connect, "SELECT * FROM users WHERE userId=" . $_SESSION['admin']);
+} else {
+    $res = mysqli_query($connect, "SELECT * FROM users WHERE userId=" . $_SESSION['admin']);
 }
 
 $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
@@ -52,10 +52,10 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
         <form class="form-inline">
             <a class="navbar-brand" href="home.php">Home</a>
             <!-- go to admin button only vis for administrators -->
-            <?php if(isset($_SESSION["admin"])){
-                echo"<a href='home.php'><button class='btn btn-warning' type='button'>Go to Admin page</button></a>";
+            <?php if (isset($_SESSION["admin"])) {
+                echo "<a href='home.php'><button class='btn btn-warning' type='button'>Go to Admin page</button></a>";
             }
-                ?>
+            ?>
             <!-- end of admin button -->
         </form>
         <form class="form-inline">
@@ -65,33 +65,47 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
     </nav>
 
     <main>
-        <?php
+        <div class="container-fluid mt-4">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Gender</th>
+                        <th scope="col">Age</th>
+                        <th scope="col">Size</th>
+                        <th scope="col">Location</th>
+                        <th scope="col">Short BIO</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $sql = "SELECT * FROM animals";
+                    $result = $connect->query($sql);
 
-        $sql = "SELECT * FROM meal";
-        $result = $connect->query($sql);
-        $result = mysqli_query($connect, $sql);
-
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                echo "  
-                            <article class='container mt-4'>
-                                <div class='card mb-3'>
-                                    <img src='" . $row['img'] . "' class='card-img-top' alt='" . $row['m_name'] . "'>
-                                    <div class='card-body'>
-                                        <h5 class='card-title'>" . $row['m_name'] . "</h5>
-                                        <p class='card-text'>Price: " . $row['price'] . "$</p>
-                                        <p class='card-text'>Ingredients: " . $row['ingredients'] . "</p>
-                                        <p class='card-text'>Allergies: " . $row['allergies'] . "</p>
-                                    </div>
-                                </div>
-                            </article>";
-            }
-        } else {
-            echo  "<tr><td colspan='5'><center>No Data Avaliable</center></td></tr>";
-        }
-
-
-        ?>
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            echo  "<tr scope='row'>
+                       <td>" . $row['animalName'] . "</td>
+                       <td><img src=" . $row['img'] . "></td>
+                       <td>" . $row['gender'] . "</td>
+                       <td>" . $row['age'] . "</td>
+                       <td>" . $row['size'] . "</td>
+                       <td>" . $row['address'] . ', ' . $row['zip'] . ',' . $row['city'] . "</td>
+                       <td>" . $row['description'] . "</td>
+                       <td>
+                       </td>
+                   </tr>";
+                        }
+                    } else {
+                        echo  "<tr scope='row'>
+                    <td colspan='12'><center>No Data Avaliable</center></td>
+                </tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
     </main>
 
     <!-- Optional JavaScript -->
