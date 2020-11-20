@@ -16,7 +16,7 @@ if (isset($_SESSION['user'])) {
 }
 
 $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
-// var_dump($_SESSION);
+var_dump($_SESSION);
 ?>
 
 <!DOCTYPE html>
@@ -40,7 +40,7 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
         }
 
         img {
-            height: 20em;
+            height: 10em;
         }
     </style>
 
@@ -60,7 +60,7 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
         </form>
         <form class="form-inline">
             <a class="navbar-brand" href="#">Welcome - <?php echo $userRow['userName']; ?></a>
-            <a href="../logout.php?logout"><button class="btn btn-outline-primary" type="button">Sign Out</button></a>
+            <a href="logout.php?logout"><button class="btn btn-outline-primary" type="button">Sign Out</button></a>
         </form>
     </nav>
 

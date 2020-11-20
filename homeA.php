@@ -5,7 +5,7 @@ require_once 'actions/db_connect.php';
 
 // if session is not admin it get redirected to the user page
 if (!isset($_SESSION["admin"])) {
-    header("Location: homeU.php");
+    header("Location: home.php");
 }
 
 // select logged-in users details (user or admin)
@@ -16,7 +16,7 @@ if (isset($_SESSION['user'])) {
 }
 
 $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
-// var_dump($_SESSION);
+var_dump($_SESSION);
 ?>
 
 <!DOCTYPE html>
@@ -40,7 +40,7 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
         }
 
         img {
-            height: 20em;
+            height: 10em;
         }
     </style>
 
@@ -53,7 +53,7 @@ $userRow = mysqli_fetch_array($res, MYSQLI_ASSOC);
             <a class="navbar-brand" href="home.php">Home</a>
             <a href="create.php"><button class="btn btn-warning" type="button">Add Pet</button></a>
             <!-- jump to the user site -->
-            <a href="homeU.php"><button class="btn btn-primary  ml-2" type="button">User Preview Site</button></a>
+            <a href="homeA.php"><button class="btn btn-primary  ml-2" type="button">User Preview Site</button></a>
             <!--  -->
         </form>
         <form class="form-inline">
